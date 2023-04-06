@@ -255,14 +255,13 @@ fun VLTray01ItemText(
 
             overflow = TextOverflow.Ellipsis
         )
-        if (data.gist?.description != null) {
-            if (true) {
-
+        if (layout?.settings?.enableSharing == true) {
 
                 Image(
-                    painter = painterResource(id = com.example.topstories.R.drawable.ic_launcher_background),
+                    painter = painterResource(id = com.example.topstories.R.drawable.baseline_share_24),
                     contentDescription = null,
                     modifier = Modifier
+                        .testTag("TOPSTORYMAINSHAREICON")
                         .constrainAs(shareAction) {
                             top.linkTo(titleText.top)
                             end.linkTo(parent.end)
@@ -275,7 +274,6 @@ fun VLTray01ItemText(
 
                 Image(painter = painterResource(id = R.drawable.icon_share), contentDescription = null )
             }*/
-            }
         }
     }
 

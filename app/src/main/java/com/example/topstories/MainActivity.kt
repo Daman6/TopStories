@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.R
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.White
+                    color = Color.DarkGray
                 ) {
                     val context = LocalContext.current
                     val jsonFile = context.assets.open("data.json")
@@ -114,7 +114,7 @@ fun VLHighlightTray01(
                 }
             )
         }
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = verticalMargin)
@@ -126,25 +126,27 @@ fun VLHighlightTray01(
                 },
             horizontalAlignment = Alignment.CenterHorizontally) {
 
-            VLTray01Header(
-                title = module.title ?: "",
-                subtitle = module.subtitle,
-                layout = module.layout,
-                trayTitleColor = Color.Black,
-                isDivider = false,
+           item {
+               VLTray01Header(
+                   title = module.title ?: "",
+                   subtitle = module.subtitle,
+                   layout = module.layout,
+                   trayTitleColor = Color.White,
+                   isDivider = false,
 //                listener = listener
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            HighlightTopImageTrayItem(topItemData, module.layout, true)
-            Spacer(modifier = Modifier.size(16.dp))
-            VLVerticalGrid(dataList = dataList, layout = module.layout)
+               )
+               Spacer(modifier = Modifier.size(16.dp))
+               HighlightTopImageTrayItem(topItemData, module.layout, false)
+               Spacer(modifier = Modifier.size(16.dp))
+               VLVerticalGrid(dataList = dataList, layout = module.layout)
 
-            if (module.layout?.settings?.showMore == true) {
-                VLSeeMoreButton(
-                    modifier = Modifier
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 28.dp)
-                        .fillMaxWidth(), module)
-                /*Button(
+               if (module.layout?.settings?.showMore == true) {
+                   VLSeeMoreButton(
+                       modifier = Modifier
+                           .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 28.dp)
+                           .fillMaxWidth(), module
+                   )
+                   /*Button(
                     onClick = { *//*TODO*//* },
                     modifier = Modifier
                         .padding(16.dp)
@@ -152,7 +154,8 @@ fun VLHighlightTray01(
                 ) {
                     Text(text = "See all")
                 }*/
-            }
+               }
+           }
             //Spacer(modifier = Modifier.size(16.dp))
         }
     }
@@ -178,7 +181,7 @@ fun HighlightTopImageTrayItem(
             .background(TrayUtil.TryaBgColor(layout?.settings), RoundedCornerShape(4.dp))
             .clickable {
 //                listener.clickItemTrayAction(data.gist?.id + " -- " + data.gist?.title)
-                       },
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TrayImageTopThumb(topItemData = data, imageDpSize)
@@ -193,9 +196,10 @@ fun HighlightTopImageTrayItem(
 
         if (isShowDescription && data.gist!=null && !data.gist.description.isNullOrEmpty()) {
             Text(
-                text = data.gist.description.toString(),
-                style = TrayUtil.TypoGraphyMap["traySubTitle"]!!.copy(color = Color(0xffC4CED4)),
+                text = "Hbjfjsdhfjd fjbhjff kjebf efjbef ewf  fn bnew f kjbqf mn qf   kwbfk ef kbwef ew f",
+                style = TrayUtil.TypoGraphyMap["traySubTitle"]!!.copy(color = Color.White),
                 modifier = Modifier
+                    .testTag("INSIDETOPHIGHLIGHT")
                     .padding(horizontal = 12.dp)
                     .width(highlightWidth)
             )
@@ -212,6 +216,7 @@ fun HighlightTopImageTrayItem(
             text = infoText,
             style = TrayUtil.TypoGraphyMap["traySubTitle"]!!.copy(color = Color(0xff838996)),
             modifier = Modifier
+                .testTag("TOPSTORIESINFOTEXT")
                 .width(highlightWidth)
                 .padding(12.dp)
         )
@@ -235,6 +240,7 @@ fun TrayImageTopThumb(topItemData : ContentData, imageDpSize: DpSize){
         contentDescription = null,
         contentScale = ContentScale.FillBounds,
         modifier = Modifier
+            .testTag("TOPTHUMBNAIL")
             .size(imageDpSize)
             .clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp))
     )
@@ -258,6 +264,7 @@ fun VLVerticalGrid(dataList: List<ContentData>,
     },
         modifier = Modifier
             .fillMaxWidth()
+            .testTag("VERTICALGRID")
             .height(TrayUtil.gridHeight(layout?.settings, dataList.size))
         //.height(500.dp)
     )
@@ -330,6 +337,7 @@ fun HighlightLeftImageTrayItem(
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
+                    .testTag("LEFTTHUMBNAIL")
                     .constrainAs(thumbImage) {
                         start.linkTo(parent.start)
                         top.linkTo(parent.top)
@@ -409,9 +417,10 @@ fun HighlightLeftImageTrayItem(
                     painter = painterResource(id = com.example.topstories.R.drawable.baseline_share_24),
                     contentDescription = null,
                     modifier = Modifier
+                        .testTag("SHAREICON")
                         .constrainAs(shareAction) {
                             top.linkTo(titleText.top)
-                            end.linkTo(parent.end,12.dp)
+                            end.linkTo(parent.end, 12.dp)
                             start.linkTo(titleText.end, 20.dp)
                         }
                         .clickable {
@@ -470,6 +479,7 @@ fun HighlightRightImageTrayItem(
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
+                    .testTag("RIGHTTHUMBNAIL")
                     .constrainAs(thumbImage) {
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
@@ -550,7 +560,7 @@ fun HighlightRightImageTrayItem(
                     modifier = Modifier
                         .constrainAs(shareAction) {
                             top.linkTo(titleText.top)
-                            end.linkTo(thumbImage.start,12.dp)
+                            end.linkTo(thumbImage.start, 12.dp)
                             start.linkTo(titleText.end, 20.dp)
                         }
                         .clickable {
@@ -621,10 +631,11 @@ fun VLSeeMoreButton(modifier: Modifier, module: Module) {
 
     Button(
         onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(
-//            containerColor = Color.Transparent,
-            contentColor = contentColorFor(backgroundColor = TrayUtil.trayBgColor)
-        ),
+//        colors = ButtonDefaults.buttonColors(
+////            containerColor = Color.Transparent,
+////            contentColor = contentColorFor(backgroundColor = TrayUtil.trayBgColor)
+//        ),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent, contentColor = Color.White),
         modifier = modifier
             .testTag("SEEMOREBTN")
             .border(
@@ -632,7 +643,7 @@ fun VLSeeMoreButton(modifier: Modifier, module: Module) {
                 //Color(0x75000000 + borderColor.toArgb()),
                 //Color(0x25000000 +TrayUtil.TryaBgColor(settings).toArgb()),
 //            TrayUtil.TryaButtonBorderColor(module.layout?.settings),
-                color = Color.Yellow,
+                color = TrayUtil.trayBgColor,
                 //borderColor,
                 RoundedCornerShape(4.dp)
             )
