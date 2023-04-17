@@ -54,7 +54,7 @@ data class ContentData(
     val contentType: String? = null,
     @SerializedName("author")
     @Expose
-    val author: String? = null,
+    var author: String? = null,
     @SerializedName("homeTeam")
     @Expose
     val homeTeam: Team? = null,
@@ -87,7 +87,7 @@ data class ContentData(
     var score: GameScores? = null,
     @SerializedName("publishDate")
     @Expose
-    val publishDate: Long? = null,
+    var publishDate: Long? = null,
 
 ) :Parcelable
 
@@ -287,7 +287,7 @@ data class Settings(
     val loop: Boolean = false,
     @SerializedName("enableSharing")
     @Expose
-    val enableSharing: Boolean = false,
+    var enableSharing: Boolean = false,
     @SerializedName("parallax")
     @Expose
     val parallax: Parallax,
@@ -299,7 +299,7 @@ data class Settings(
     val textBackgroundColor: TextBackgroundColor,
     @SerializedName("thumbnailPlacement")
     @Expose
-    val thumbnailPlacement: String,
+    var thumbnailPlacement: String,
     @SerializedName("thumbnailType")
     @Expose
     val thumbnailType: String,
@@ -316,7 +316,7 @@ data class Settings(
     @SerializedName("showMoreCTA")@Expose val showMoreCTA: String,
     @SerializedName("seeAll")@Expose val seeAll: Boolean,
     @SerializedName("seeAllCard")@Expose val seeAllCard: Boolean,
-    @SerializedName("showMore")@Expose val showMore: Boolean,
+    @SerializedName("showMore")@Expose var showMore: Boolean,
     @SerializedName("showMorePermalink")@Expose val showMorePermalink: String?,
     @SerializedName("enableCustomStyle")@Expose val enableCustomStyle: Boolean,
     @SerializedName("enableOverrideSettings")@Expose val enableOverrideSettings: Boolean,

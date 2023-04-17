@@ -43,9 +43,7 @@ import com.example.topstories.screens.VLTray01ItemText
 import com.example.topstories.screens.VLTray01ViewItem
 import com.example.topstories.ui.theme.TopStoriesTheme
 import com.google.gson.Gson
-import com.viewlift.uimodule.data.ContentData
-import com.viewlift.uimodule.data.Layout
-import com.viewlift.uimodule.data.Module
+import com.viewlift.uimodule.data.*
 import com.viewlift.uimodule.tray.util.TrayUtil
 import com.viewlift.uimodule.utils.UiUtils
 
@@ -66,6 +64,131 @@ class MainActivity : ComponentActivity() {
 
                     val gson = Gson()
                     val main = gson.fromJson(json, Module::class.java)
+                    val imageGist = com.viewlift.uimodule.data.ImageGist(
+                        "https://image.develop.monumentalsportsnetwork.com/00000151-11b4-d29b-a17d-55fdb2b80000/images/2023/03/15/1678898169667_tts1_16x9Images.jpg",
+                        "https://image.develop.monumentalsportsnetwork.com/00000151-11b4-d29b-a17d-55fdb2b80000/images/2023/03/4/1677913352713_9_16changeimage_13_1x1Images.jpg",
+                        "https://image.develop.monumentalsportsnetwork.com/00000151-11b4-d29b-a17d-55fdb2b80000/images/2023/03/4/1677913180800_32_9changeimage_12_32x9Images.jpg",
+                        "https://image.develop.monumentalsportsnetwork.com/00000151-11b4-d29b-a17d-55fdb2b80000/images/2023/03/4/1677913339325_3_4changeimage_12_3x4Images.jpg",
+                        "",
+                        ""
+                    )
+                    val gist = Gist(
+                        "ARTICLE",
+                        id = "fcfac5ab-6e86-44fb-9aab-59db34a71e64",
+                        imageGist = imageGist,
+                        "/article/New article-20230304065855037",
+                        "Wizards Hopeful Beal can Key Turnaround",
+                        "",
+                        null
+                    )
+                    val highlights = Highlights("22", "Higlight", gist)
+                    val liveStream: ArrayList<Highlights> = arrayListOf(highlights)
+                    val scheduleEvent: ArrayList<ScheduleEvent> =
+                        arrayListOf(ScheduleEvent(null, null, null))
+                    val metaData: ArrayList<com.viewlift.uimodule.data.Metadata> =
+                        arrayListOf(com.viewlift.uimodule.data.Metadata("metadata", "value"))
+                    val contentData = ContentData(
+                        author = "Christian Plank",
+                        runtime = 0,
+                        contentType = "ARTICLE",
+                        highlights = liveStream,
+                        homeTeam = null,
+                        id = "fcfac5ab-6e86-44fb-9aab-59db34a71e64",
+                        publishDate = 1678898189,
+                        readTime = "0.7",
+                        score = null,
+                        gist = gist,
+                        awayTeam = null,
+                        parentalRating = "",
+                        livestreams = liveStream,
+                        preview = highlights,
+                        currentState = "",
+                        states = null,
+                        metadata = metaData,
+                        schedules = scheduleEvent,
+                        broadcaster = ""
+                    )
+                    val contentDataList = listOf<ContentData>(contentData)
+                    val metadata = com.viewlift.uimodule.data.MetadataMap(
+                        "Quarter",
+                        "Final",
+                        "GAME PREVIEW",
+                        "Game starts at",
+                        "LIVE",
+                        "2nd Period",
+                        "POST GAME",
+                        "Presented by:",
+                        "PRE GAME",
+                        "Read Story",
+                        "See More",
+                        "Watch in Game Center"
+                    )
+                    val layout = Layout(
+                        blockName = "VL_HighlightTray_01",
+                        id = "",
+                        fontSetting = FontsSetting(
+                            titleFontFamilyName = "AcuminPro",
+                            titleFontSize = "18px",
+                            titleFontWeight = "bold",
+                            trayItemFontWeight = "semiBold",
+                            trayItemSubtitleFontSize = "14px",
+                            subtitleFontSize = "",
+                            subtitleFontWeight = "",
+                            subtitleFontFamilyName = "",
+                            trayItemFontFamilyName = "",
+                            buttonFontFamilyName = "",
+                            buttonFontSize = "",
+                            buttonFontWeight = "",
+                            teamFontFamilyName = "",
+                            teamFontSize = "",
+                            teamFontWeight = "",
+                            trayItemTitleFontFamilyName = "",
+                            trayItemTitleFontSize = "",
+                            trayItemTitleFontWeight = ""
+                        ),
+                        settings = Settings(
+                            columns = Columns(4.0, 4.0, 6.0, 4.0),
+                            enableCustomStyle = false,
+                            enableOverrideSettings = false,
+                            enableSharing = false,
+                            loop = false,
+                            parallax = Parallax(false, "", ""),
+                            removeTrayBottomTitle = false,
+                            roundedCornerButton = false,
+                            seeAll = false,
+                            seeAllCard = false,
+                            showContentDuration = false,
+                            showMore = false,
+                            showMorePermalink = "/category/wizards",
+                            textBackgroundColor = TextBackgroundColor(1.0f, 65.0f, 29.0f, 13.0f),
+                            thumbnailPlacement = "TOP",
+                            thumbnailType = "16*9",
+                            trayIconUrl = "",
+                            fontSettings = listOf(),
+                            seeAllPermalink = "",
+                            showMoreCTA = "",
+                            postGameColor = "",
+                            defaultGameColor = "",
+                            liveGameColor = "",
+                            calandarBgColor = "",
+                            preGameColor = "",
+                            moduleBackgroundColor = "",
+                            trayTitleColor = ""
+                        ),
+                        isMasthead = false,
+                        styles = Styles(""),
+                        type = "VL_HighlightTray_01",
+                        view = "VL_HighlightTray_01"
+                    )
+                    main.copy(
+                        contentData = contentDataList,
+                        id = "",
+                        title = "Top Stories",
+                        subtitle = "",
+                        moduleType = "CuratedTrayModule",
+                        metadataMap = null,
+                        layout = layout
+                    )
 
 //                    VLTray01(module = main)
                     VLHighlightTray01(module = main)
@@ -206,7 +329,7 @@ fun HighlightTopImageTrayItem(
         }
 
         val publishedDate = if(data.publishDate!=null){
-            "${UiUtils.getPublishDate(data.publishDate)}"
+            "${UiUtils.getPublishDate(data.publishDate!!)}"
         } else {
             data.readTime
         }
@@ -381,7 +504,7 @@ fun HighlightLeftImageTrayItem(
                 }
             )*/
             val publishedDate = if(data.publishDate!=null){
-                UiUtils.getPublishDate(data.publishDate)
+                UiUtils.getPublishDate(data.publishDate!!)
             } else {
                 data.readTime
             }
@@ -522,7 +645,7 @@ fun HighlightRightImageTrayItem(
                 }
             )*/
             val publishedDate = if(data.publishDate!=null){
-                "${UiUtils.getPublishDate(data.publishDate)}h"
+                "${UiUtils.getPublishDate(data.publishDate!!)}h"
             } else {
                 data.readTime
             }
